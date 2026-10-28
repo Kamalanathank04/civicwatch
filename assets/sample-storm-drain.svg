@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="100%" height="100%">
+  <rect width="400" height="260" fill="#334155"/>
+  <!-- Asphalt -->
+  <rect x="0" y="0" width="400" height="170" fill="#475569"/>
+  <!-- Water puddle pooling -->
+  <ellipse cx="200" cy="110" rx="160" ry="50" fill="#0284c7" opacity="0.65"/>
+  <!-- Drain grating -->
+  <rect x="130" y="70" width="140" height="80" fill="#1e293b" stroke="#0f172a" stroke-width="3"/>
+  <line x1="150" y1="70" x2="150" y2="150" stroke="#64748b" stroke-width="4"/>
+  <line x1="170" y1="70" x2="170" y2="150" stroke="#64748b" stroke-width="4"/>
+  <line x1="190" y1="70" x2="190" y2="150" stroke="#64748b" stroke-width="4"/>
+  <line x1="210" y1="70" x2="210" y2="150" stroke="#64748b" stroke-width="4"/>
+  <line x1="230" y1="70" x2="230" y2="150" stroke="#64748b" stroke-width="4"/>
+  <line x1="250" y1="70" x2="250" y2="150" stroke="#64748b" stroke-width="4"/>
+  <!-- Mud/leaves choking grate -->
+  <path d="M 125 100 Q 150 145 190 135 Q 240 140 275 110 Q 230 85 180 90 Z" fill="#78350f" opacity="0.9"/>
+  <circle cx="160" cy="115" r="7" fill="#15803d"/>
+  <circle cx="210" cy="120" r="9" fill="#166534"/>
+  <!-- Badge -->
+  <rect x="15" y="15" width="170" height="26" rx="4" fill="#1e293b"/>
+  <text x="25" y="32" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">PHOTO EVIDENCE #CW-1025</text>
+  <text x="15" y="248" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="11">Location: Kasturba Nagar 3rd Cross</text>
+</svg>

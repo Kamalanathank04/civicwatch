@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicWatch — Citizen-Powered Cleaner Cities | MyBharat Hack for Social Cause</title>
+  <meta name="description" content="A simple, privacy-preserving reporting and tracking platform for urban garbage and environmental hazards. Greater Chennai Corporation Ward 172 Pilot.">
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="assets/audio/narration-data.js"></script>
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <aside class="gov-banner" aria-label="Hackathon & Event Information">
+    <div class="gov-banner-text">
+      <span style="color:#fbbf24;">🇮🇳</span>
+      <span><strong>MyBharat Hack for Social Cause</strong> • Ministry of Youth Affairs & Sports (MoYAS) & IIT Bombay</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="team-pill">TEAM ID: HSC|TN|03258</span>
+      <span style="font-size:0.75rem; color:#cbd5e1;">Tamil Nadu • HackSphere</span>
+    </div>
+  </aside>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">CW</div>
+        <div>
+          <h1 class="brand-title">CivicWatch</h1>
+          <p class="brand-subtitle">Citizen-Powered Cleaner Cities • GCC Ward 172 Pilot</p>
+        </div>
+      </div>
+
+      <!-- Role Switcher & Deliverable Shortcuts -->
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <a href="presentation.html" target="_blank" class="btn-secondary" style="text-decoration:none; display:flex; align-items:center; gap:6px; color:#b45309; border-color:#fde68a; background:#fefce8; padding:7px 12px; font-size:0.85rem;">
+          <span>📊</span> HSC Presentation (7 Slides) &nearr;
+        </a>
+        <a href="videos/registration-walkthrough.html" target="_blank" class="btn-secondary" style="text-decoration:none; display:flex; align-items:center; gap:6px; color:#0369a1; border-color:#bae6fd; background:#f0f9ff; padding:7px 12px; font-size:0.85rem;">
+          <span>🎬</span> Walkthrough Video Studio &nearr;
+        </a>
+
+        <nav class="role-toggle-group" aria-label="Role Switcher">
+          <button type="button" class="role-btn active" data-role="citizen">
+            <span>👤</span> Citizen Portal
+          </button>
+          <button type="button" class="role-btn" data-role="supervisor">
+            <span>🏢</span> Ward Supervisor Dashboard
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="main-wrapper">
+
+    <!-- ==================== CITIZEN SECTION ==================== -->
+    <section id="citizenSection">
+      
+      <!-- Submission Success Alert Banner -->
+      <div id="submissionSuccessBanner" class="alert-success-banner" style="display:none;" role="alert">
+        <div class="alert-success-content">
+          <span style="font-size:1.5rem; color:#059669;">✓</span>
+          <div>
+            <h4 style="font-size:0.95rem; font-weight:700; color:#065f46;" id="successBannerMsg">Complaint Logged Successfully!</h4>
+            <p style="font-size:0.85rem; color:#047857;">Your tracking ID is: <strong id="successComplaintId" class="team-pill" style="color:#065f46; background:#d1fae5; border-color:#6ee7b7;">CW-2025-TN-XXXX</strong>. Save this ID to track municipal action.</p>
+          </div>
+        </div>
+        <button type="button" class="btn-secondary" style="font-size:0.8rem;" onclick="CivicApp.setTab('track'); document.getElementById('trackInput').value = document.getElementById('successComplaintId').textContent; CivicApp.handleTrackLookup();">
+          Track Now →
+        </button>
+      </div>
+
+      <!-- Citizen Navigation Tabs -->
+      <nav class="nav-tabs" aria-label="Citizen Actions">
+        <button type="button" class="tab-btn active" data-tab="report">📝 File New Report</button>
+        <button type="button" class="tab-btn" data-tab="track">🔍 Track by Complaint ID</button>
+        <button type="button" class="tab-btn" data-tab="feed">📢 Ward 172 Public Feed</button>
+        <button type="button" class="tab-btn" data-tab="video" style="color:#0284c7; font-weight:700;">🎬 Watch Video Walkthrough</button>
+        <a href="presentation.html" target="_blank" class="tab-btn" style="text-decoration:none; color:#b45309;">📊 Official HSC Deck (7 Slides) &nearr;</a>
+      </nav>
+
+      <!-- TAB 1: FILE REPORT -->
+      <div id="tab-report" class="citizen-panel">
+        <div class="grid-2col">
+          
+          <!-- Report Form Card -->
+          <article class="card">
+            <header class="card-header">
+              <div>
+                <h2 class="card-title">Report Civic or Sanitation Hazard</h2>
+                <p class="card-subtitle">Zero registration required. Fast, photo-verified community reporting.</p>
+              </div>
+              <span class="badge badge-reported">Live Ward Pilot</span>
+            </header>
+
+            <form id="reportForm" novalidate>
+              
+              <!-- Category -->
+              <div class="form-group">
+                <label for="categorySelect" class="form-label">Issue Category <span class="required">*</span></label>
+                <select id="categorySelect" class="form-select" required>
+                  <option value="" disabled selected>Select category of civic issue...</option>
+                  <option value="Overflowing Garbage Bin">Overflowing Garbage Bin</option>
+                  <option value="Plastic Waste Accumulation">Plastic Waste Accumulation</option>
+                  <option value="Blocked Storm Drain">Blocked Storm Drain (Pre-Monsoon Risk)</option>
+                  <option value="Construction & Demolition Debris">Construction & Demolition Debris</option>
+                  <option value="Toxic / Hazardous Waste">Toxic / Chemical / Medical Waste</option>
+                  <option value="Sanitation / Animal Hazard">Sanitation Hazard / Stagnant Filth</option>
+                </select>
+                <p class="form-hint">Accurate categorization routes your ticket directly to the right conservancy squad.</p>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label for="descriptionInput" class="form-label">Description of Observation <span class="required">*</span></label>
+                <textarea id="descriptionInput" class="form-textarea" placeholder="E.g., Commercial waste spilling onto the pedestrian footpath opposite Adyar bus depot. Foul smell spreading." rows="3" required></textarea>
+                <p class="form-hint">Minimum 15 characters. Describe the severity and surrounding context.</p>
+              </div>
+
+              <!-- Location Details -->
+              <div class="form-group">
+                <label class="form-label">Incident Location <span class="required">*</span></label>
+                <div class="location-row" style="margin-bottom:8px;">
+                  <button type="button" id="getGeoBtn" class="geo-btn">
+                    <span>📍</span> Use Browser GPS
+                  </button>
+                  <div id="geoStatus" style="font-size:0.8rem; color:#475569; align-self:center;"></div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:8px;">
+                  <div>
+                    <label for="wardSelect" class="form-label" style="font-size:0.8rem;">Municipal Ward</label>
+                    <select id="wardSelect" class="form-select" style="font-size:0.85rem;">
+                      <option value="Ward 172 (Adyar)" selected>Greater Chennai Corp - Ward 172 (Adyar)</option>
+                      <option value="Ward 173 (Besant Nagar)">Greater Chennai Corp - Ward 173 (Besant Nagar)</option>
+                      <option value="Ward 174 (Thiruvanmiyur)">Greater Chennai Corp - Ward 174 (Thiruvanmiyur)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="streetInput" class="form-label" style="font-size:0.8rem;">Street / Road Name <span class="required">*</span></label>
+                    <input type="text" id="streetInput" class="form-input" placeholder="E.g., 2nd Avenue" style="font-size:0.85rem;" required>
+                  </div>
+                </div>
+
+                <div style="margin-top:8px;">
+                  <label for="landmarkInput" class="form-label" style="font-size:0.8rem;">Nearby Landmark / Specific Spot</label>
+                  <input type="text" id="landmarkInput" class="form-input" placeholder="E.g., Opposite Depot Bus Shelter, near corner bakery" style="font-size:0.85rem;">
+                </div>
+              </div>
+
+              <!-- Photo Evidence -->
+              <div class="form-group">
+                <label class="form-label">Photographic Evidence <span class="required">*</span></label>
+                <label for="photoInput" class="photo-dropzone">
+                  <div id="dropzoneText">
+                    <span style="font-size:1.8rem; display:block; margin-bottom:4px;">📷</span>
+                    <strong style="color:var(--color-navy); font-size:0.9rem;">Click or tap to capture / upload photo</strong>
+                    <p style="font-size:0.75rem; color:#64748b; margin-top:4px;">Photos are automatically downsampled on device to preserve data storage and privacy.</p>
+                  </div>
+                  <div id="previewContainer" class="preview-container" style="display:none;">
+                    <img id="previewImg" class="preview-img" alt="Photo Preview">
+                    <button type="button" id="removePhotoBtn" class="remove-photo-btn" title="Remove photo">✕</button>
+                  </div>
+                  <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" style="display:none;">
+                </label>
+              </div>
+
+              <!-- Anonymous Reporting Switch -->
+              <div class="form-group">
+                <div class="switch-wrapper">
+                  <div>
+                    <strong style="font-size:0.875rem; color:var(--color-navy);">Report Anonymously</strong>
+                    <p style="font-size:0.75rem; color:#64748b;">No personal information, identity, or account details are shared or stored.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="anonToggle" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Optional Phone Number (if not anonymous) -->
+              <div id="phoneGroup" class="form-group" style="display:none;">
+                <label for="phoneInput" class="form-label">Mobile Number (Optional for SMS updates)</label>
+                <input type="tel" id="phoneInput" class="form-input" placeholder="+91 98401 23456">
+                <p class="form-hint">Used exclusively for automated municipal resolution status SMS alerts.</p>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="submitReportBtn" class="btn-primary">
+                <span>🚀</span> Submit Civic Complaint
+              </button>
+
+            </form>
+          </article>
+
+          <!-- Side Guidelines & Community Context -->
+          <aside>
+            <div class="card" style="background-color:#f8fafc; border-left:4px solid var(--color-gold);">
+              <h3 class="card-title" style="font-size:1.05rem;">How CivicWatch Protects Public Health</h3>
+              <ul style="font-size:0.85rem; color:#475569; padding-left:18px; margin-top:10px; line-height:1.7;">
+                <li><strong>Zero-Friction Access:</strong> No cumbersome passwords or OTP lockouts. Any citizen can report hazards immediately.</li>
+                <li><strong>Smart Duplicate Clustering:</strong> If neighbors already reported the same garbage pile, you can corroborate it with one click, elevating its priority.</li>
+                <li><strong>Accountability Proof:</strong> Every complaint generates a permanent <code style="font-family:var(--font-mono); color:#1b2a4a;">CW-ID</code> with an immutable timeline.</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title" style="font-size:1.05rem;">Ward 172 Conservancy Standards</h3>
+              <div style="font-size:0.85rem; color:#475569; margin-top:8px;">
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #e2e8f0;">
+                  <span>Overflowing Bin SLA:</span>
+                  <strong style="color:var(--color-navy);">&lt; 12 Hours</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #e2e8f0;">
+                  <span>Blocked Storm Drain SLA:</span>
+                  <strong style="color:#b91c1c;">&lt; 6 Hours (Urgent)</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0;">
+                  <span>C&D Construction Debris:</span>
+                  <strong style="color:var(--color-navy);">&lt; 24 Hours</strong>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+
+      <!-- TAB 2: TRACK STATUS -->
+      <div id="tab-track" class="citizen-panel" style="display:none;">
+        <div class="card" style="max-width:760px; margin:0 auto 24px auto;">
+          <h2 class="card-title" style="text-align:center;">Track Complaint Status & Resolution</h2>
+          <p class="card-subtitle" style="text-align:center;">Enter your unique Complaint Tracking Token (e.g. CW-2025-TN-1041)</p>
+          
+          <div style="display:flex; gap:10px; margin-top:20px;">
+            <input type="text" id="trackInput" class="form-input" placeholder="Enter Complaint ID (e.g. CW-2025-TN-1041)" style="font-family:var(--font-mono); font-size:1rem; text-transform:uppercase;">
+            <button type="button" id="trackSearchBtn" class="btn-primary" style="width:auto; white-space:nowrap;">
+              Track Status
+            </button>
+          </div>
+        </div>
+
+        <div id="trackResultBox" style="max-width:760px; margin:0 auto; display:none;"></div>
+      </div>
+
+      <!-- TAB 3: WARD FEED -->
+      <div id="tab-feed" class="citizen-panel" style="display:none;">
+        <div style="max-width:800px; margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <h2 style="font-family:var(--font-serif); font-size:1.35rem; color:var(--color-navy);">Public Ward 172 Complaints Feed</h2>
+              <p style="font-size:0.85rem; color:#64748b;">Transparent public log of active and resolved community issues in Adyar.</p>
+            </div>
+          </div>
+          <div id="publicFeedContainer"></div>
+        </div>
+      </div>
+
+      <!-- TAB 4: DIRECT VIDEO WALKTHROUGH PLAYER -->
+      <div id="tab-video" class="citizen-panel" style="display:none;">
+        <div class="card" style="max-width:960px; margin:0 auto; padding:20px;">
+          <div class="card-header" style="margin-bottom:14px; padding-bottom:10px;">
+            <div>
+              <h2 class="card-title">Official Prototype Video Walkthrough & Voiceover</h2>
+              <p class="card-subtitle">Watch the complete submission walkthrough with studio voiceover narration directly in your browser.</p>
+            </div>
+            <span class="team-pill" style="color:var(--color-navy); border-color:var(--color-navy); background:#f1f5f9;">HSC|TN|03258</span>
+          </div>
+
+          <!-- 16:9 Video Canvas -->
+          <div style="width:100%; aspect-ratio:16/9; background:#0f172a; border-radius:6px; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.3); border:1px solid #334155; position:relative;">
+            <canvas id="walkthroughCanvas" width="1280" height="720" style="width:100%; height:100%; display:block;"></canvas>
+          </div>
+
+          <!-- Video Controls -->
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:14px; margin-top:12px;">
+            <div style="width:100%; height:6px; background:#e2e8f0; border-radius:3px; cursor:pointer; overflow:hidden; margin-bottom:12px;" id="embeddedProgressTrack">
+              <div style="height:100%; width:0%; background:#0284c7; transition:width 0.05s linear;" id="embeddedProgressBar"></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div style="display:flex; gap:10px; align-items:center;">
+                <button type="button" class="btn-primary" style="width:auto; padding:8px 18px; font-size:0.85rem;" id="embeddedPlayBtn">▶ Play Walkthrough</button>
+                <button type="button" class="btn-secondary" style="padding:8px 14px; font-size:0.85rem;" id="embeddedRestartBtn">⏮ Restart</button>
+                <label style="font-size:0.8rem; color:#475569; display:flex; align-items:center; gap:6px; cursor:pointer;">
+                  <input type="checkbox" id="embeddedVoiceToggle" checked> Studio Audio Voiceover
+                </label>
+              </div>
+
+              <div style="display:flex; gap:10px; align-items:center;">
+                <span id="embeddedTimeDisplay" style="font-family:var(--font-mono); font-size:0.85rem; color:#64748b;">00:00 / 01:48</span>
+                <a href="presentation.html" target="_blank" class="btn-secondary" style="text-decoration:none; font-size:0.85rem; color:#b45309; border-color:#fde68a; background:#fffbeb;">
+                  📊 View 7-Slide HSC Deck &nearr;
+                </a>
+              </div>
+            </div>
+
+            <!-- Scene Quick-Jump Chips -->
+            <div style="display:flex; gap:6px; overflow-x:auto; margin-top:12px; padding-top:10px; border-top:1px solid #e2e8f0;">
+              <button type="button" class="btn-secondary embedded-chip" data-scene="0" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">1. Cover & Team ID (0:00)</button>
+              <button type="button" class="btn-secondary embedded-chip" data-scene="1" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">2. Registration (0:14)</button>
+              <button type="button" class="btn-secondary embedded-chip" data-scene="2" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">3. Reporting (0:27)</button>
+              <button type="button" class="btn-secondary embedded-chip" data-scene="3" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">4. Deduplication (0:47)</button>
+              <button type="button" class="btn-secondary embedded-chip" data-scene="4" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">5. Supervisor Console (1:04)</button>
+              <button type="button" class="btn-secondary embedded-chip" data-scene="5" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">6. Public Timeline (1:20)</button>
+              <button type="button" class="btn-secondary embedded-chip" data-scene="6" style="font-size:0.75rem; padding:4px 10px; white-space:nowrap;">7. Tests & Summary (1:33)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== WARD SUPERVISOR SECTION ==================== -->
+    <section id="supervisorSection" style="display:none;">
+      
+      <!-- Supervisor Profile & Stats Banner -->
+      <div class="card" style="background:#f8fafc; border-left:4px solid var(--color-navy); margin-bottom:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <span class="team-pill" style="color:var(--color-navy); border-color:var(--color-navy); background:white;">OFFICIAL CONSERVANCY CONSOLE</span>
+            <h2 style="font-family:var(--font-serif); font-size:1.4rem; color:var(--color-navy); margin-top:6px;">Ward 172 Sanitation Control Board</h2>
+            <p style="font-size:0.85rem; color:#475569;">Jurisdiction: Adyar / Besant Nagar • Officer-in-Charge: <strong>Murugan (Sanitation Supervisor)</strong></p>
+          </div>
+          <button type="button" id="resetDataBtn" class="btn-secondary" style="font-size:0.8rem; background:white;">
+            🔄 Reset Demo to GCC Seed
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="statTotal">4</div>
+          <div class="stat-label">Total Ward Reports</div>
+        </div>
+        <div class="stat-card stat-reported">
+          <div class="stat-number" id="statReported" style="color:var(--color-status-reported);">1</div>
+          <div class="stat-label">Awaiting Triage</div>
+        </div>
+        <div class="stat-card stat-progress">
+          <div class="stat-number" id="statProgress" style="color:var(--color-status-progress);">1</div>
+          <div class="stat-label">In Progress (Crew Assigned)</div>
+        </div>
+        <div class="stat-card stat-resolved">
+          <div class="stat-number" id="statResolved" style="color:var(--color-status-resolved);">2</div>
+          <div class="stat-label">Resolved & Cleared</div>
+        </div>
+      </div>
+
+      <!-- Complaints Management Table -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Ward 172 Live Complaint Triage Queue</h3>
+            <p class="card-subtitle">Inspect photographic proof, review duplicate clusters, and dispatch conservancy crews.</p>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <select id="statusFilter" class="form-select" style="font-size:0.85rem; width:auto;">
+              <option value="ALL">All Statuses</option>
+              <option value="Reported">Reported (Pending)</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+            <input type="text" id="searchFilter" class="form-input" placeholder="Search street / ID..." style="font-size:0.85rem; width:180px;">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Complaint ID</th>
+                <th>Category & Details</th>
+                <th>Location</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="supervisorTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Explainable Duplicate Detection Modal -->
+  <div id="duplicateModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="dupModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span style="font-size:1.5rem; color:#b45309;">⚠️</span>
+        <h3 id="dupModalTitle" class="modal-title">Nearby Active Report Detected</h3>
+      </div>
+      <div class="modal-body" id="duplicateDetails"></div>
+      <div class="modal-footer">
+        <button type="button" id="duplicateCancelBtn" class="btn-secondary">Cancel</button>
+        <button type="button" id="duplicateProceedBtn" class="btn-secondary" style="border-color:#b45309; color:#92400e;">File as Separate Report</button>
+        <button type="button" id="duplicateUpvoteBtn" class="btn-primary" style="width:auto;">👍 Corroborate & Elevate Priority</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supervisor Status Update Modal -->
+  <div id="statusModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="statusModalTitle">
+    <div class="modal-card">
+      <div class="modal-header" style="background:#f1f5f9; border-bottom:1px solid #e2e8f0;">
+        <span style="font-size:1.3rem; color:var(--color-navy);">🛠️</span>
+        <h3 id="statusModalTitle" class="modal-title">Dispatch Action for <span id="modalReportId"></span></h3>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="newStatusSelect" class="form-label">Update Workflow Status</label>
+          <select id="newStatusSelect" class="form-select">
+            <option value="Reported">Reported (Pending Review)</option>
+            <option value="In Progress">In Progress (Crew Dispatched)</option>
+            <option value="Resolved">Resolved (Cleared & Verified)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="officerNoteInput" class="form-label">Official Conservancy Field Note</label>
+          <textarea id="officerNoteInput" class="form-textarea" placeholder="E.g., Dispatched Mini-Tipper #TN-07-G-4421. Waste cleared and 500L bin disinfected with bleaching powder."></textarea>
+          <p class="form-hint">This note will appear on the citizen's public accountability tracking timeline.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancelStatusBtn" class="btn-secondary">Cancel</button>
+        <button type="button" id="saveStatusBtn" class="btn-primary" style="width:auto;">Commit Status Update</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>
+        <p><strong>CivicWatch Prototype</strong> — Designed for the MyBharat Hack for Social Cause</p>
+        <p style="margin-top:2px;">Team HackSphere: <strong>Kamalanathan K</strong> (Lead) • <strong>Gunasri R</strong> (Testing & Docs) • <strong>Krishnaprasad S</strong> (Backend)</p>
+      </div>
+      <div style="text-align:right;">
+        <p>Official Team ID: <strong style="color:var(--color-navy);">HSC|TN|03258</strong> • Tamil Nadu</p>
+        <p style="margin-top:2px;">Zero external tracking • LocalStorage sandbox engine</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/app.js"></script>
+</body>
+</html>

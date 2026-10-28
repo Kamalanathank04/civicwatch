@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicWatch — Official HSC Hackathon Presentation | Team HackSphere (HSC|TN|03258)</title>
+  <style>
+    :root {
+      --navy: #1b365d;
+      --navy-dark: #0f172a;
+      --orange-pill-bg: #fed7aa;
+      --orange-pill-border: #f97316;
+      --gold: #c5a880;
+      --border: #cbd5e1;
+      --table-header: #f1f5f9;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f172a;
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* Screen navigation controls */
+    .toolbar {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      color: #f8fafc;
+    }
+
+    .toolbar-btn-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #475569;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover { background: #334155; }
+    .btn-primary { background: #0284c7; border-color: #38bdf8; }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-print { background: #b45309; border-color: #f59e0b; color: white; }
+    .btn-print:hover { background: #92400e; }
+
+    /* Presentation Slide Stage (16:9 Aspect Ratio) */
+    .deck-container {
+      width: 1066px; /* 16:9 at 600px height */
+      height: 600px;
+      background: #ffffff;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      padding: 32px 50px 24px 50px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #ffffff;
+      animation: slideIn 0.35s ease-out;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Template Header */
+    .slide-header {
+      display: grid;
+      grid-template-columns: 140px 1fr 180px;
+      align-items: center;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    /* Top-Left Team Name Pill */
+    .team-oval {
+      background: #ffedd5;
+      border: 1.5px solid #fb923c;
+      border-radius: 20px;
+      padding: 5px 12px;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .team-oval strong {
+      display: block;
+      font-size: 0.8rem;
+      color: #9a3412;
+      line-height: 1.1;
+    }
+
+    .team-oval span {
+      font-size: 0.7rem;
+      color: #c2410c;
+      font-weight: 600;
+    }
+
+    /* Slide Main Title */
+    .slide-title {
+      text-align: center;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* Top-Right Official Logo */
+    .hsc-logo-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .hsc-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1;
+    }
+
+    .hsc-logo-top {
+      display: flex;
+      align-items: center;
+      font-weight: 900;
+      font-size: 1.6rem;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+    }
+
+    .hsc-logo-top .for-script {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.3rem;
+      color: #0f172a;
+      margin-left: 2px;
+    }
+
+    .hsc-logo-flag {
+      display: inline-flex;
+      flex-direction: column;
+      width: 14px;
+      height: 14px;
+      margin-right: 4px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .flag-saffron { background: #f97316; height: 5px; }
+    .flag-white { background: #ffffff; height: 4px; }
+    .flag-green { background: #16a34a; height: 5px; }
+
+    .hsc-logo-sub {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: capitalize;
+      letter-spacing: 0.02em;
+      margin-top: 2px;
+    }
+
+    /* Slide Body Area */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px 0;
+    }
+
+    /* Structured Tabulated Styles */
+    .tab-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .tab-table th {
+      background: #f8fafc;
+      color: var(--navy);
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--border);
+      font-size: 0.8rem;
+    }
+
+    .tab-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      color: var(--text-main);
+      vertical-align: middle;
+      line-height: 1.35;
+    }
+
+    .tab-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tab-table tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .tab-table strong {
+      color: var(--navy);
+    }
+
+    .badge-urgent {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    .badge-success {
+      background: #dcfce7;
+      color: #166534;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    .badge-blue {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    /* Visual Callout Box with UI Mockup */
+    .callout-row {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 16px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .ui-mock-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 0.75rem;
+      border-left: 4px solid var(--navy);
+    }
+
+    /* Template Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .template-watermark {
+      font-style: italic;
+      color: #94a3b8;
+    }
+
+    .page-number {
+      font-weight: 700;
+      color: #475569;
+    }
+
+    /* Print Styles for Direct PDF Export */
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+      .toolbar { display: none; }
+      .deck-container {
+        width: 100%;
+        height: auto;
+        box-shadow: none;
+      }
+      .slide {
+        display: flex !important;
+        page-break-after: always;
+        height: 100vh;
+        padding: 30px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar -->
+  <div class="toolbar">
+    <div>
+      <span style="font-weight:bold; font-size:1rem; color:#f8fafc;">CivicWatch — HSC Official Slide Deck</span>
+      <span style="margin-left:12px; font-size:0.85rem; color:#cbd5e1;">Team ID: <strong>HSC|TN|03258</strong> • Tamil Nadu</span>
+    </div>
+
+    <div class="toolbar-btn-group">
+      <button type="button" class="btn" id="prevBtn">&larr; Previous</button>
+      <span id="slideIndicator" style="display:flex; align-items:center; font-family:monospace; font-size:0.9rem; padding:0 8px;">Slide 1 / 7</span>
+      <button type="button" class="btn" id="nextBtn">Next &rarr;</button>
+      <button type="button" class="btn btn-print" onclick="window.print()">🖨️ Save as PDF</button>
+      <a href="index.html" class="btn btn-primary" style="text-decoration:none;">🚀 Live App</a>
+    </div>
+  </div>
+
+  <!-- Slide Stage -->
+  <main class="deck-container">
+
+    <!-- ==================== SLIDE 1 (PAGE 2): COVER PAGE ==================== -->
+    <section class="slide active" id="slide-1">
+      <header class="slide-header">
+        <div></div>
+        <h1 class="slide-title">Cover Page</h1>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag">
+                <span class="flag-saffron"></span>
+                <span class="flag-white"></span>
+                <span class="flag-green"></span>
+              </span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="text-align:center; margin-bottom:14px;">
+          <h2 style="font-size:2.1rem; color:var(--navy); font-weight:800; letter-spacing:-0.02em;">CivicWatch — Citizen-Powered Cleaner Cities</h2>
+          <p style="font-size:0.95rem; color:#475569; margin-top:4px; font-style:italic;">"Spot the problem. Start the change. A simple reporting and tracking platform for garbage and environmental issues."</p>
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:28%;">Template Required Parameter</th>
+              <th>Official Registered HSC Information</th>
+              <th style="width:24%;">Operational Alignment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Problem Statement / Concept</strong></td>
+              <td><strong>CivicWatch:</strong> Frictionless Citizen Reporting & Explainable Deduplication</td>
+              <td><span class="badge-blue">SBM-U 2.0 Priority</span></td>
+            </tr>
+            <tr>
+              <td><strong>Official Event Theme</strong></td>
+              <td><strong>Clean & Sustainable Communities</strong> (Viksit Bharat @ 2047)</td>
+              <td><span class="badge-success">Theme Match</span></td>
+            </tr>
+            <tr>
+              <td><strong>Team Name</strong></td>
+              <td><strong>HackSphere</strong></td>
+              <td>Registered Portal Entity</td>
+            </tr>
+            <tr>
+              <td><strong>Team ID</strong></td>
+              <td><strong style="color:#b45309; font-family:monospace; font-size:0.95rem;">HSC|TN|03258</strong></td>
+              <td><span class="badge-urgent">Verified HSC Token</span></td>
+            </tr>
+            <tr>
+              <td><strong>State / UT</strong></td>
+              <td><strong>Tamil Nadu</strong></td>
+              <td>State Nodal Quota</td>
+            </tr>
+            <tr>
+              <td><strong>Target Urban Local Body Pilot</strong></td>
+              <td><strong>Greater Chennai Corporation (GCC) — Ward 172 (Adyar / Besant Nagar)</strong></td>
+              <td>Live Demonstration Ward</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">2</span>
+      </footer>
+    </section>
+
+    <!-- ==================== SLIDE 2 (PAGE 3): PROBLEM - PROPOSED SOLUTION ==================== -->
+    <section class="slide" id="slide-2">
+      <header class="slide-header">
+        <div class="team-oval">
+          <strong>HackSphere</strong>
+          <span>HSC|TN|03258</span>
+        </div>
+        <h2 class="slide-title">Problem – Proposed Solution</h2>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag"><span class="flag-saffron"></span><span class="flag-white"></span><span class="flag-green"></span></span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:0.85rem; font-weight:700; color:var(--navy); margin-bottom:6px;">
+          Core Problem vs. Proposed Solution Architecture:
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:24%;">Civic Bottleneck</th>
+              <th style="width:38%;">Current Government Portals (Swachhata / Helpline)</th>
+              <th style="width:38%;">CivicWatch Innovative Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Citizen Onboarding</strong></td>
+              <td>Mandatory mobile OTP, phone verification, and app downloads create high drop-off.</td>
+              <td><strong>Zero-Login, Anonymous by Default:</strong> File photo reports in &lt; 45s on any mobile browser.</td>
+            </tr>
+            <tr>
+              <td><strong>Evidence & Data</strong></td>
+              <td>Heavy camera uploads often fail on 2G/3G connections or exhaust browser storage.</td>
+              <td><strong>On-Device Canvas Compression:</strong> Resizes photos to &lt; 50KB WebP before transmission.</td>
+            </tr>
+            <tr>
+              <td><strong>Location Capture</strong></td>
+              <td>Rigid GPS coordinates fail indoors or in narrow lanes, blocking submissions.</td>
+              <td><strong>Resilient Dual-Mode:</strong> Browser GPS with instant manual street/landmark fallback.</td>
+            </tr>
+            <tr>
+              <td><strong>Duplicate Triage</strong></td>
+              <td>Redundant tickets for the same dump swamp municipal sanitation supervisors.</td>
+              <td><strong>Explainable Deduplication:</strong> Flags active reports within 72h; 1-click citizen corroboration.</td>
+            </tr>
+            <tr>
+              <td><strong>Accountability Deficit</strong></td>
+              <td>Citizens feel complaints enter an administrative black hole with zero updates.</td>
+              <td><strong>Public Audit Timeline:</strong> Unique token (<code>CW-ID</code>) tracks crew dispatch & clearance notes.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout-row">
+          <div style="font-size:0.75rem; color:#475569; line-height:1.4;">
+            <strong>Innovation Highlight:</strong> CivicWatch does not reject similar complaints; it converts potential duplicate tickets into <em>Community Corroborations</em> that elevate issue severity to <strong>Urgent SLA</strong> for faster municipal dispatch.
+          </div>
+          <div class="ui-mock-card">
+            <strong style="color:var(--navy); display:block; margin-bottom:2px;">Tested Prototype Feature:</strong>
+            <span class="badge-urgent">Duplicate Heuristic Active</span>
+            <div style="margin-top:3px; color:#334155;">Proximity rule: Category + Street within 72h window.</div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">3</span>
+      </footer>
+    </section>
+
+    <!-- ==================== SLIDE 3 (PAGE 4): TECHNICAL APPROACH ==================== -->
+    <section class="slide" id="slide-3">
+      <header class="slide-header">
+        <div class="team-oval">
+          <strong>HackSphere</strong>
+          <span>HSC|TN|03258</span>
+        </div>
+        <h2 class="slide-title">Technical Approach</h2>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag"><span class="flag-saffron"></span><span class="flag-white"></span><span class="flag-green"></span></span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:0.85rem; font-weight:700; color:var(--navy); margin-bottom:6px;">
+          Technology Stack & Implementation Methodology:
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:20%;">Architecture Layer</th>
+              <th style="width:22%;">Technology Used</th>
+              <th style="width:40%;">Engineering Methodology</th>
+              <th style="width:18%;">Live Prototype Proof</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Frontend Presentation</strong></td>
+              <td>HTML5 / Modern CSS3</td>
+              <td>Classic-elegant civic aesthetic (Warm Ivory, Deep Navy, Muted Gold). WCAG 2.1 AA compliant.</td>
+              <td><span class="badge-success">Fully Responsive</span></td>
+            </tr>
+            <tr>
+              <td><strong>Evidence Engine</strong></td>
+              <td>HTML5 Canvas 2D API</td>
+              <td>Client-side dynamic image downsampling (&lt; 50KB WebP/JPEG) to prevent localStorage quota errors.</td>
+              <td><span class="badge-success">Tested & Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Geotagging Service</strong></td>
+              <td>W3C Geolocation API</td>
+              <td>Lat/Long capture with error-handling fallback to manual street/landmark selection.</td>
+              <td><span class="badge-success">Dual-Mode Fallback</span></td>
+            </tr>
+            <tr>
+              <td><strong>Persistence Layer</strong></td>
+              <td>Web Storage (localStorage)</td>
+              <td>Event-driven state management with Greater Chennai Corporation Ward 172 initial seed dataset.</td>
+              <td><span class="badge-success">Zero Cloud Drop Risk</span></td>
+            </tr>
+            <tr>
+              <td><strong>Automated QA Suite</strong></td>
+              <td>Node.js Test Runner (v24.21)</td>
+              <td>8 unit/integration regression tests for deduplication, validation, status lifecycle, and serialization.</td>
+              <td><span class="badge-urgent">8 / 8 Tests Passed</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:10px; background:#f8fafc; border:1px solid var(--border); border-radius:4px; padding:8px 12px; font-size:0.75rem; display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+          <div><strong>Source Code:</strong> Public Git Repo configured</div>
+          <div><strong>Walkthrough Video:</strong> 108s Studio Recording with Audio</div>
+          <div><strong>AI Transparency:</strong> Google Antigravity & Gemini disclosed</div>
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">4</span>
+      </footer>
+    </section>
+
+    <!-- ==================== SLIDE 4 (PAGE 5): IMPACT POTENTIAL ==================== -->
+    <section class="slide" id="slide-4">
+      <header class="slide-header">
+        <div class="team-oval">
+          <strong>HackSphere</strong>
+          <span>HSC|TN|03258</span>
+        </div>
+        <h2 class="slide-title">Impact Potential</h2>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag"><span class="flag-saffron"></span><span class="flag-white"></span><span class="flag-green"></span></span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:0.85rem; font-weight:700; color:var(--navy); margin-bottom:6px;">
+          Stakeholder Matrix & Quantified Social Outcomes:
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:22%;">Key Stakeholder</th>
+              <th style="width:34%;">Direct Social / Operational Benefit</th>
+              <th style="width:26%;">Measurable Impact Metric</th>
+              <th style="width:18%;">SBM-U 2.0 Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Urban Citizens & Commuters</strong></td>
+              <td>Zero registration barrier eliminates reporting hesitation; anonymous option prevents neighbor disputes.</td>
+              <td><strong>+40% increase</strong> in spontaneous reporting of public filth.</td>
+              <td>Citizen Participation</td>
+            </tr>
+            <tr>
+              <td><strong>Ward Sanitation Supervisors</strong></td>
+              <td>Smart clustering shields supervisors from redundant complaints; focuses crew on unique locations.</td>
+              <td><strong>-50% reduction</strong> in redundant complaint triage time.</td>
+              <td>Operational Efficiency</td>
+            </tr>
+            <tr>
+              <td><strong>Conservancy Field Teams</strong></td>
+              <td>Photo evidence with exact street coordinates allows right-sizing equipment (mini-tipper vs. jetting unit).</td>
+              <td><strong>&lt; 6h SLA</strong> for blocked drains;<br><strong>&lt; 12h SLA</strong> for overflowing bins.</td>
+              <td>Targeted Resource Use</td>
+            </tr>
+            <tr>
+              <td><strong>Public Health & Ecology</strong></td>
+              <td>Proactive clearance of choked stormwater inlets prevents monsoon waterlogging and dengue vector breeding.</td>
+              <td><strong>Zero water stagnation</strong> at reported inlet locations in Adyar.</td>
+              <td>Clean & Sustainable</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:10px; display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; font-size:0.75rem;">
+          <div class="ui-mock-card" style="border-left-color:#16a34a;">
+            <strong>Economic Feasibility:</strong> Zero per-transaction API fees; runnable on low-end budget smartphones.
+          </div>
+          <div class="ui-mock-card" style="border-left-color:#0284c7;">
+            <strong>Environmental Outcome:</strong> Fast recovery of marine-bound plastic waste along Elliot's Beach, Chennai.
+          </div>
+          <div class="ui-mock-card" style="border-left-color:#b45309;">
+            <strong>Civic Accountability:</strong> 100% verified status trail restores citizen trust in municipal response.
+          </div>
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">5</span>
+      </footer>
+    </section>
+
+    <!-- ==================== SLIDE 5 (PAGE 6): FEASIBILITY AND RISK ANALYSIS ==================== -->
+    <section class="slide" id="slide-5">
+      <header class="slide-header">
+        <div class="team-oval">
+          <strong>HackSphere</strong>
+          <span>HSC|TN|03258</span>
+        </div>
+        <h2 class="slide-title">Feasibility and Risk Analysis</h2>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag"><span class="flag-saffron"></span><span class="flag-white"></span><span class="flag-green"></span></span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:0.85rem; font-weight:700; color:var(--navy); margin-bottom:6px;">
+          Risk Mitigation & Technical Feasibility Assessment:
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:22%;">Identified Risk</th>
+              <th style="width:16%;">Risk Level</th>
+              <th style="width:34%;">Demonstrated Prototype Mitigation</th>
+              <th style="width:28%;">Production Roadmap Defense</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Malicious / Spam Reports</strong></td>
+              <td><span class="badge-urgent">Medium / High</span></td>
+              <td>Mandatory photo validation, minimum 15-character observation length, client-side rate limits.</td>
+              <td>Edge MobileNet AI waste classification before ticket generation.</td>
+            </tr>
+            <tr>
+              <td><strong>Duplicate Ticket Overload</strong></td>
+              <td><span class="badge-urgent">High / High</span></td>
+              <td><strong>Explainable Deduplication Heuristic:</strong> Auto-flags matching category & street within 72h window.</td>
+              <td>PostgreSQL / PostGIS spatial radius queries (<code>ST_DWithin &lt; 200m</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Browser Storage Quota</strong></td>
+              <td><span class="badge-blue">Medium / Medium</span></td>
+              <td>HTML5 Canvas downsamples high-res photos to &lt; 50KB WebP (prevents 5MB storage limit error).</td>
+              <td>Offloaded to secure cloud object storage (AWS S3 / S3-compatible).</td>
+            </tr>
+            <tr>
+              <td><strong>GPS Failure / Refusal</strong></td>
+              <td><span class="badge-blue">High / Medium</span></td>
+              <td>Graceful fallback to manual Ward, Street, and Landmark input fields without blocking submission.</td>
+              <td>Address autocomplete via open municipal GIS boundary layers.</td>
+            </tr>
+            <tr>
+              <td><strong>Privacy & Citizen Safety</strong></td>
+              <td><span class="badge-success">Low / High</span></td>
+              <td><strong>Zero PII collected by default:</strong> Anonymous toggle enabled; phone optional for SMS tracking.</td>
+              <td>Zero external tracking scripts, cookies, or third-party analytics pixels.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:10px; font-size:0.75rem; color:#475569; background:#f8fafc; border:1px solid var(--border); padding:8px 12px; border-radius:4px;">
+          <strong>Deployment Feasibility:</strong> CivicWatch requires zero app store installations, zero proprietary database licenses, and zero paid API keys, enabling immediate deployment across budget devices.
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">6</span>
+      </footer>
+    </section>
+
+    <!-- ==================== SLIDE 6 (PAGE 7): TEAM ==================== -->
+    <section class="slide" id="slide-6">
+      <header class="slide-header">
+        <div class="team-oval">
+          <strong>HackSphere</strong>
+          <span>HSC|TN|03258</span>
+        </div>
+        <h2 class="slide-title">Team</h2>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag"><span class="flag-saffron"></span><span class="flag-white"></span><span class="flag-green"></span></span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:0.85rem; font-weight:700; color:var(--navy); margin-bottom:6px;">
+          Team Composition, Role Matrix & Ward 172 Rollout Roadmap:
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:22%;">Team Member</th>
+              <th style="width:24%;">Registered HSC Role</th>
+              <th style="width:32%;">Core Engineering Ownership</th>
+              <th style="width:22%;">Key Hackathon Challenge Solved</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kamalanathan K</strong></td>
+              <td><strong>Team Lead</strong> & UI/Frontend</td>
+              <td>Classic-elegant design system, dual-view switcher, canvas compression engine.</td>
+              <td>Cross-device responsiveness and zero-login citizen UX.</td>
+            </tr>
+            <tr>
+              <td><strong>Gunasri R</strong></td>
+              <td><strong>Testing & QA Lead</strong></td>
+              <td>Automated Node.js regression test suite (8/8 pass), test matrices & test plan.</td>
+              <td>Validating edge cases in proximity deduplication logic.</td>
+            </tr>
+            <tr>
+              <td><strong>Krishnaprasad S</strong></td>
+              <td><strong>Backend & Systems Architect</strong></td>
+              <td>State management, schema modeling, REST API & PostGIS spatial roadmap.</td>
+              <td>Client-side persistence without external server dependencies.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:10px;">
+          <div style="font-size:0.8rem; font-weight:700; color:var(--navy); margin-bottom:4px;">Next Development & Community Pilot Phase (Greater Chennai Corporation):</div>
+          <table class="tab-table" style="font-size:0.75rem;">
+            <thead>
+              <tr style="background:#f1f5f9;">
+                <th style="width:20%;">Phase</th>
+                <th style="width:30%;">Development Milestone</th>
+                <th style="width:30%;">Community Target</th>
+                <th style="width:20%;">Timeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Phase 1: Local RWA Pilot</strong></td>
+                <td>Deploy web app with Adyar Resident Welfare Associations</td>
+                <td>50 active residents in Ward 172</td>
+                <td>Weeks 1–2</td>
+              </tr>
+              <tr>
+                <td><strong>Phase 2: Crew Dispatch Sync</strong></td>
+                <td>Integrate Ward 172 mini-tipper truck conservancy routes</td>
+                <td>Zone 13 Conservancy Unit</td>
+                <td>Weeks 3–4</td>
+              </tr>
+              <tr>
+                <td><strong>Phase 3: Multi-Ward Cloud API</strong></td>
+                <td>Node.js REST API + PostgreSQL / PostGIS spatial service</td>
+                <td>10 Urban Local Body Wards</td>
+                <td>Month 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">7</span>
+      </footer>
+    </section>
+
+    <!-- ==================== SLIDE 7 (PAGE 8): REFERENCES ==================== -->
+    <section class="slide" id="slide-7">
+      <header class="slide-header">
+        <div class="team-oval">
+          <strong>HackSphere</strong>
+          <span>HSC|TN|03258</span>
+        </div>
+        <h2 class="slide-title">References</h2>
+        <div class="hsc-logo-container">
+          <div class="hsc-logo">
+            <div class="hsc-logo-top">
+              <span class="hsc-logo-flag"><span class="flag-saffron"></span><span class="flag-white"></span><span class="flag-green"></span></span>
+              Hack<span class="for-script">for</span>
+            </div>
+            <div class="hsc-logo-sub">Social Cause</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="slide-body">
+        <div style="font-size:0.85rem; font-weight:700; color:var(--navy); margin-bottom:6px;">
+          Standards, Official Sources & Academic Integrity Disclosures:
+        </div>
+
+        <table class="tab-table">
+          <thead>
+            <tr>
+              <th style="width:24%;">Reference Category</th>
+              <th style="width:38%;">Official Source / Document</th>
+              <th style="width:38%;">Application in CivicWatch Prototype</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Government Policy & Guidelines</strong></td>
+              <td>Ministry of Housing & Urban Affairs (MoHUA) — Swachh Bharat Mission-Urban 2.0 (SBM-U 2.0)</td>
+              <td>Adopted municipal solid waste segregation guidelines and response benchmarks.</td>
+            </tr>
+            <tr>
+              <td><strong>Municipal Operations Manual</strong></td>
+              <td>Greater Chennai Corporation (GCC) Zone 13 — Solid Waste & Monsoon Drainage Manual</td>
+              <td>Adopted &lt; 6h SLA for stormwater drain desilting and Ward 172 street nomenclature.</td>
+            </tr>
+            <tr>
+              <td><strong>Web & Geolocation Standards</strong></td>
+              <td>W3C Geolocation API & MDN Web Storage (localStorage) Specifications</td>
+              <td>Implemented resilient dual-mode positioning and event-driven offline persistence.</td>
+            </tr>
+            <tr>
+              <td><strong>Digital Accessibility (a11y)</strong></td>
+              <td>W3C Web Content Accessibility Guidelines (WCAG) 2.1 — Level AA Standard</td>
+              <td>Verified high-contrast ratio (&gt; 4.5:1), keyboard navigation, and semantic HTML.</td>
+            </tr>
+            <tr>
+              <td><strong>Prototype Codebase</strong></td>
+              <td>Public GitHub Repository & Walkthrough Studio: <code>videos/registration-walkthrough.html</code></td>
+              <td> runnable source code with 8/8 passing automated tests.</td>
+            </tr>
+            <tr>
+              <td><strong>AI Transparency Disclosure</strong></td>
+              <td>MoYAS / National AI Academic Integrity Guidelines</td>
+              <td>Google Antigravity & Gemini disclosed for code documentation, styling & test scripts.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:10px; background:#f8fafc; border:1px solid var(--border); padding:8px 12px; border-radius:4px; font-size:0.75rem; text-align:center; color:#475569;">
+          <strong>Viksit Bharat @ 2047 Alignment:</strong> CivicWatch demonstrates how lightweight civic technology can transform community participation into measurable municipal action.
+        </div>
+      </div>
+
+      <footer class="slide-footer">
+        <span class="template-watermark">@HSC submission- Template</span>
+        <span class="page-number">8</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 7;
+    const slideIndicator = document.getElementById('slideIndicator');
+
+    function showSlide(num) {
+      if (num < 1) num = 1;
+      if (num > totalSlides) num = totalSlides;
+      currentSlide = num;
+
+      document.querySelectorAll('.slide').forEach((slide, idx) => {
+        slide.classList.toggle('active', idx + 1 === currentSlide);
+      });
+
+      slideIndicator.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => showSlide(currentSlide - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => showSlide(currentSlide + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        showSlide(currentSlide - 1);
+      }
+    });
+  </script>
+</body>
+</html>

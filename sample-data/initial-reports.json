@@ -1,0 +1,136 @@
+[
+  {
+    "id": "CW-2025-TN-1041",
+    "category": "Overflowing Garbage Bin",
+    "description": "Commercial waste and unsegregated household garbage overflowing from dual masonry bin. Cattle foraging and waste spilling onto pedestrian walkway near bus shelter.",
+    "ward": "Ward 172 (Adyar)",
+    "street": "2nd Avenue",
+    "landmark": "Opposite Adyar Depot Bus Stand",
+    "latitude": 13.0067,
+    "longitude": 80.2571,
+    "status": "Reported",
+    "severity": "High",
+    "isAnonymous": true,
+    "citizenContact": null,
+    "createdAt": "2026-10-27T08:30:00.000Z",
+    "updatedAt": "2026-10-27T08:30:00.000Z",
+    "photoUrl": "assets/sample-bin-overflow.svg",
+    "duplicateCount": 2,
+    "timeline": [
+      {
+        "status": "Reported",
+        "timestamp": "2026-10-27T08:30:00.000Z",
+        "actor": "Citizen (Anonymous)",
+        "note": "Initial report submitted with geo-coordinates."
+      }
+    ]
+  },
+  {
+    "id": "CW-2025-TN-1038",
+    "category": "Plastic Waste Accumulation",
+    "description": "Heavy accumulation of discarded plastic beverage bottles, food containers, and polythene carry bags along the beach promenade perimeter wall.",
+    "ward": "Ward 172 (Adyar)",
+    "street": "6th Avenue / Beach Road",
+    "landmark": "Near Karl Schmidt Memorial, Besant Nagar",
+    "latitude": 13.0002,
+    "longitude": 80.2668,
+    "status": "In Progress",
+    "severity": "Medium",
+    "isAnonymous": true,
+    "citizenContact": null,
+    "createdAt": "2026-10-26T14:15:00.000Z",
+    "updatedAt": "2026-10-27T09:00:00.000Z",
+    "photoUrl": "assets/sample-plastic-beach.svg",
+    "duplicateCount": 1,
+    "timeline": [
+      {
+        "status": "Reported",
+        "timestamp": "2026-10-26T14:15:00.000Z",
+        "actor": "Citizen (Anonymous)",
+        "note": "Report logged."
+      },
+      {
+        "status": "In Progress",
+        "timestamp": "2026-10-27T09:00:00.000Z",
+        "actor": "Ward Sanitation Supervisor (Murugan)",
+        "note": "Assigned to Zone 13 Coastal Sanitation Squad (Mini-tipper #TN-07-G-4421)."
+      }
+    ]
+  },
+  {
+    "id": "CW-2025-TN-1025",
+    "category": "Blocked Storm Drain",
+    "description": "Stormwater runoff inlet grating completely choked with dense silt, leaves, and plastic debris. Water pooling 4 inches deep on road shoulder after yesterday's rain.",
+    "ward": "Ward 172 (Adyar)",
+    "street": "3rd Cross Street",
+    "landmark": "Kasturba Nagar, near Community Hall",
+    "latitude": 13.0034,
+    "longitude": 80.2520,
+    "status": "Resolved",
+    "severity": "Urgent",
+    "isAnonymous": false,
+    "citizenContact": "+91 98401 23456",
+    "createdAt": "2026-10-25T09:00:00.000Z",
+    "updatedAt": "2026-10-25T16:30:00.000Z",
+    "photoUrl": "assets/sample-storm-drain.svg",
+    "duplicateCount": 0,
+    "timeline": [
+      {
+        "status": "Reported",
+        "timestamp": "2026-10-25T09:00:00.000Z",
+        "actor": "Citizen (Verified Phone)",
+        "note": "Urgent stormwater blockage reported."
+      },
+      {
+        "status": "In Progress",
+        "timestamp": "2026-10-25T11:00:00.000Z",
+        "actor": "Ward Sanitation Supervisor",
+        "note": "Dispatched GCC Super Sucker / Jetting unit."
+      },
+      {
+        "status": "Resolved",
+        "timestamp": "2026-10-25T16:30:00.000Z",
+        "actor": "Ward Sanitation Supervisor",
+        "note": "Drain grating lifted, silt cleared (approx. 40kg debris removed). Storm inlet tested with clear flow."
+      }
+    ]
+  },
+  {
+    "id": "CW-2025-TN-1019",
+    "category": "Construction & Demolition Debris",
+    "description": "Unauthorized night dumping of crushed masonry rubble and cement plaster sacks on corner plot, blocking half of pedestrian sidewalk.",
+    "ward": "Ward 172 (Adyar)",
+    "street": "1st Main Road",
+    "landmark": "Near Gandhi Nagar Club boundary",
+    "latitude": 13.0112,
+    "longitude": 80.2554,
+    "status": "Resolved",
+    "severity": "Medium",
+    "isAnonymous": true,
+    "citizenContact": null,
+    "createdAt": "2026-10-24T11:20:00.000Z",
+    "updatedAt": "2026-10-25T10:00:00.000Z",
+    "photoUrl": "assets/sample-debris.svg",
+    "duplicateCount": 0,
+    "timeline": [
+      {
+        "status": "Reported",
+        "timestamp": "2026-10-24T11:20:00.000Z",
+        "actor": "Citizen (Anonymous)",
+        "note": "Sidewalk obstruction reported."
+      },
+      {
+        "status": "In Progress",
+        "timestamp": "2026-10-24T15:30:00.000Z",
+        "actor": "Ward Sanitation Supervisor",
+        "note": "GCC C&D waste tractor scheduled for clearance."
+      },
+      {
+        "status": "Resolved",
+        "timestamp": "2026-10-25T10:00:00.000Z",
+        "actor": "Ward Sanitation Supervisor",
+        "note": "Debris loaded and transported to Kodungaiyur C&D recycling facility. Sidewalk cleared."
+      }
+    ]
+  }
+]

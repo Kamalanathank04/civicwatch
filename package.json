@@ -1,0 +1,20 @@
+{
+  "name": "civicwatch",
+  "version": "1.0.0",
+  "description": "CivicWatch — Citizen-Powered Cleaner Cities for MyBharat Hack for Social Cause",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "test": "node tests/test_civicwatch.js"
+  },
+  "keywords": [
+    "civic-tech",
+    "swachh-bharat",
+    "mybharat",
+    "hack-for-social-cause",
+    "chennai",
+    "sanitation"
+  ],
+  "author": "Team HackSphere (Kamalanathan K, Gunasri R, Krishnaprasad S)",
+  "license": "MIT"
+}
